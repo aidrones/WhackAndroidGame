@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         //
         btnControl.setOnClickListener {
             if (btnControl.text == "Start"){
-                Toast.makeText(this, " Tap Drone To Score ", Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, " Tap Drone To Score ", 4) .show()
                 btnControl.text = "Stop"
                 score = 0
                 txtScore.text = "Score: " + score.toString()
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnImgButton.setOnClickListener {
-            score += 100
+            score += 50
             if (score == 1000){
                 timer.cancel()
             txtScore.text = "You Have Won!"
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         score -= 100
         txtScore.text = "Score: " + score.toString()
         if (score == 0 || score == -100){
-            Toast.makeText(this, "Game Over", Toast.LENGTH_LONG) .show()
+            Toast.makeText(this, "Game Over", 4) .show()
             score = 0
             txtScore.text = "Score: " + score.toString()
             btnImgButton.setTranslationX(-300F)
@@ -80,11 +80,11 @@ class MainActivity : AppCompatActivity() {
     }
 }
     fun ChangeImage(){
-        y = ((Math.random() * getScreenHeight()) + 50) .toFloat()
-        x = ((Math.random() * getScreenWidth()) + 50) .toFloat()
+        y = ((Math.random() * getScreenHeight()) + 100) .toFloat()
+        x = ((Math.random() * getScreenWidth()) + 100) .toFloat()
         imgDrone.setTranslationX(x)
         imgDrone.setTranslationY(y)
-        timer.schedule(timerTask {ChangeImage()}, 2000)
+        timer.schedule(timerTask {ChangeImage()}, 1500)
     }
     fun getScreenWidth(): Float{
         return Resources.getSystem().getDisplayMetrics().widthPixels / 1.4F
