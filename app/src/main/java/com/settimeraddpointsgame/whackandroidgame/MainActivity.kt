@@ -28,40 +28,43 @@ class MainActivity : AppCompatActivity() {
         var btnControl = findViewById<Button>(R.id.btnControl)
         var gameBackGround = findViewById<ConstraintLayout>(R.id.GameCanvas)
         //set objects offscreen
-        btnImgButton.setTranslationX(-300F)
-        btnImgButton.setTranslationY(-300F)
+        btnImgButton.setTranslationX(-400F)
+        btnImgButton.setTranslationY(-400F)
         //
         btnControl.setOnClickListener {
             if (btnControl.text == "Start"){
-                Toast.makeText(this, " Tap Drone To Score ", 4) .show()
+                Toast.makeText(this, " Tap Drone To Score ", 2) .show()
                 btnControl.text = "Stop"
                 score = 0
                 txtScore.text = "Score: " + score.toString()
-                btnImgButton.setTranslationX(-300F)
-                btnImgButton.setTranslationY(-300F)
+                btnImgButton.setTranslationX(-400F)
+                btnImgButton.setTranslationY(-400F)
                 timer = Timer()
-                timer.schedule(timerTask {ChangeImage()}, 5000)
+                timer.schedule(timerTask {ChangeImage()}, 6000)
 
             }else{
                 btnControl.text = "Start"
-                btnImgButton.setTranslationX(-300F)
-                btnImgButton.setTranslationY(-300F)
+                btnImgButton.setTranslationX(-400F)
+                btnImgButton.setTranslationY(-400F)
                 timer.cancel()
             }
         }
 
         btnImgButton.setOnClickListener {
             score += 50
-            if (score == 1000){
-                timer.cancel()
-            txtScore.text = "You Have Won!"
-            score = 0
-            btnControl.text = "Start"
-            btnImgButton.setTranslationX(-300F)
-            btnImgButton.setTranslationY(-300F)
-        }else{
-            txtScore.text = "Score: " + score.toString()
-        }
+            when (score) {
+                500 -> timer.schedule(timerTask { ChangeImage() }, 1000)
+                    1000 -> {
+                        timer.cancel()
+                        txtScore.text = "You Have Won!"
+                        score = 0
+                        btnControl.text = "Start"
+                        btnImgButton.setTranslationX(-400F)
+                        btnImgButton.setTranslationY(-400F)
+                    }
+                    else -> txtScore.text = "Score: " + score.toString()
+                }
+
     }
 
     gameBackGround.setOnClickListener{
@@ -69,29 +72,29 @@ class MainActivity : AppCompatActivity() {
         score -= 100
         txtScore.text = "Score: " + score.toString()
         if (score == 0 || score == -100){
-            Toast.makeText(this, "Game Over", 4) .show()
+            Toast.makeText(this, "Game Over", 2) .show()
             score = 0
             txtScore.text = "Score: " + score.toString()
-            btnImgButton.setTranslationX(-300F)
-            btnImgButton.setTranslationY(-300F)
+            btnImgButton.setTranslationX(-400F)
+            btnImgButton.setTranslationY(-400F)
             timer.cancel()
             btnControl.text = "Start"
         }
     }
 }
     fun ChangeImage(){
-        y = ((Math.random() * getScreenHeight()) + 100) .toFloat()
-        x = ((Math.random() * getScreenWidth()) + 100) .toFloat()
+        y = ((Math.random() * getScreenHeight()) + 50) .toFloat()
+        x = ((Math.random() * getScreenWidth()) + 50) .toFloat()
         imgDrone.setTranslationX(x)
         imgDrone.setTranslationY(y)
-        timer.schedule(timerTask {ChangeImage()}, 1500)
+        timer.schedule(timerTask {ChangeImage()}, 2000)
     }
     fun getScreenWidth(): Float{
-        return Resources.getSystem().getDisplayMetrics().widthPixels / 1.4F
+        return Resources.getSystem().getDisplayMetrics().widthPixels / 3.4F
     }
 
     fun getScreenHeight(): Float{
-        return Resources.getSystem().getDisplayMetrics().heightPixels / 1.4F
+        return Resources.getSystem().getDisplayMetrics().heightPixels / 3.4F
     }
 
 }
